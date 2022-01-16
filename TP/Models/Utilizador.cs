@@ -10,9 +10,11 @@ namespace TP.Models
     public class Utilizador : IdentityUser
     {
         [PersonalData]
+        [Required]
         public string Nome { get; set; }
 
         [PersonalData]
+        [Required]
         [Display(Name = "Data de Nascimento")]
         public DateTime Data_Nascimento { get; set; }
 

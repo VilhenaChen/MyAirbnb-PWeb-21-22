@@ -33,8 +33,15 @@ namespace TP.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Display(Name = "Nome")]
+            public string Nome { get; set; }
+
+            [DataType(DataType.Date)]
+            [Display(Name = "Data de Nascimento")]
+            public DateTime Data_Nascimento { get; set; }
+
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Nº de Telemóvel")]
             public string PhoneNumber { get; set; }
         }
 
@@ -47,6 +54,8 @@ namespace TP.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                Nome = user.Nome,
+                Data_Nascimento = user.Data_Nascimento,
                 PhoneNumber = phoneNumber
             };
         }
@@ -87,6 +96,11 @@ namespace TP.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            user.Data_Nascimento = Input.Data_Nascimento;
+            user.Nome = Input.Nome;
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
