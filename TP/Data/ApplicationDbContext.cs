@@ -13,5 +13,6 @@ namespace TP.Data
             : base(options)
         {
         }
+        public DbSet<TP.Models.Imovel> Imovel { get; set; }
     }
 }
