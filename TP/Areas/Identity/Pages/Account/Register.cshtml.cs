@@ -25,6 +25,7 @@ namespace TP.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
+
         public RegisterModel(
             UserManager<Utilizador> userManager,
             SignInManager<Utilizador> signInManager,
@@ -79,6 +80,7 @@ namespace TP.Areas.Identity.Pages.Account
             [Phone]
             [Display(Name = "Nº de Telemóvel")]
             public string PhoneNumber { get; set; }
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -98,7 +100,8 @@ namespace TP.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     //Dar role ao user
-                    await _userManager.AddToRoleAsync(user, "Cliente");
+                    var r = Request.Form["Role"];
+                    await _userManager.AddToRoleAsync(user, r);
 
                     _logger.LogInformation("User created a new account with password.");
 
