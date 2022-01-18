@@ -107,6 +107,8 @@ namespace TP.Areas.Identity.Pages.Account
                     //Dar role ao user
                     var r = Request.Form["Role"];
                     await _userManager.AddToRoleAsync(user, r);
+
+                    //Criar um elemento de gestor ou cliente na tabela de base de dados respetiva
                     if (r == "Gestor") {
                         Gestor gestor = new Gestor();
                         gestor.UtilizadorId = user.Id;

@@ -13,7 +13,7 @@ namespace TP.Data
             : base(options)
         {
         }
-        public DbSet<TP.Models.Imovel> Imovel { get; set; }
+        public DbSet<Imovel> Imovel { get; set; }
         public DbSet<Gestor> Gestor { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Funcionario> Funcionario { get; set; }

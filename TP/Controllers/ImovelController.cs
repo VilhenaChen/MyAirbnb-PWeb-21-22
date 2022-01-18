@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,18 +14,20 @@ namespace TP.Controllers
 {
     public class ImovelController : Controller
     {
+        private readonly UserManager<Utilizador> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public ImovelController(ApplicationDbContext context)
+        public ImovelController(ApplicationDbContext context, UserManager<Utilizador> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [AllowAnonymous]
         // GET: Imovels
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Imovel.Include(i => i.Gestor);
+            var applicationDbContext = _context.Imovel;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -37,7 +40,6 @@ namespace TP.Controllers
             }
 
             var imovel = await _context.Imovel
-                .Include(i => i.Gestor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (imovel == null)
             {
@@ -51,7 +53,6 @@ namespace TP.Controllers
         // GET: Imovels/Create
         public IActionResult Create()
         {
-            ViewData["GestorId"] = new SelectList(_context.Set<Gestor>(), "Id", "Id");
             return View();
         }
 
@@ -60,15 +61,21 @@ namespace TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Tipo,Tipologia,Nome,Pais,Cidade,Codigo_Postal,Morada,Descricao,Extras,Preco,GestorId")] Imovel imovel)
+        public async Task<IActionResult> Create([Bind("Id,Tipo,Tipologia,Nome,Pais,Cidade,Codigo_Postal,Morada,Descricao,Extras,Preco")] Imovel imovel)
         {
             if (ModelState.IsValid)
             {
+                Utilizador user = await _userManager.GetUserAsync(User);
+                DbSet<Gestor> gestores = _context.Set<Gestor>();
+                foreach(Gestor g in gestores)
+                {
+                    if(g.UtilizadorId == user.Id)
+                        imovel.GestorId = g.Id;
+                }
                 _context.Add(imovel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GestorId"] = new SelectList(_context.Set<Gestor>(), "Id", "Id", imovel.GestorId);
             return View(imovel);
         }
 
@@ -86,7 +93,6 @@ namespace TP.Controllers
             {
                 return NotFound();
             }
-            ViewData["GestorId"] = new SelectList(_context.Set<Gestor>(), "Id", "Id", imovel.GestorId);
             return View(imovel);
         }
 
@@ -95,7 +101,7 @@ namespace TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo,Tipologia,Nome,Pais,Cidade,Codigo_Postal,Morada,Descricao,Extras,Preco,GestorId")] Imovel imovel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo,Tipologia,Nome,Pais,Cidade,Codigo_Postal,Morada,Descricao,Extras,Preco")] Imovel imovel)
         {
             if (id != imovel.Id)
             {
@@ -106,6 +112,13 @@ namespace TP.Controllers
             {
                 try
                 {
+                    Utilizador user = await _userManager.GetUserAsync(User);
+                    DbSet<Gestor> gestores = _context.Set<Gestor>();
+                    foreach (Gestor g in gestores)
+                    {
+                        if (g.UtilizadorId == user.Id)
+                            imovel.GestorId = g.Id;
+                    }
                     _context.Update(imovel);
                     await _context.SaveChangesAsync();
                 }
@@ -122,7 +135,6 @@ namespace TP.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GestorId"] = new SelectList(_context.Set<Gestor>(), "Id", "Id", imovel.GestorId);
             return View(imovel);
         }
 
@@ -136,7 +148,6 @@ namespace TP.Controllers
             }
 
             var imovel = await _context.Imovel
-                .Include(i => i.Gestor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (imovel == null)
             {
