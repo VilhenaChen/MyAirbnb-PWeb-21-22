@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using TP.Data;
 using TP.Models;
 
 namespace TP.Areas.Identity.Pages.Account
@@ -24,18 +25,22 @@ namespace TP.Areas.Identity.Pages.Account
         private readonly UserManager<Utilizador> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private ApplicationDbContext _context;
 
 
         public RegisterModel(
             UserManager<Utilizador> userManager,
             SignInManager<Utilizador> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, 
+            ApplicationDbContext context
+        )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
@@ -102,6 +107,19 @@ namespace TP.Areas.Identity.Pages.Account
                     //Dar role ao user
                     var r = Request.Form["Role"];
                     await _userManager.AddToRoleAsync(user, r);
+                    if (r == "Gestor") {
+                        Gestor gestor = new Gestor();
+                        gestor.UtilizadorId = user.Id;
+                        _context.Add(gestor);
+                        await _context.SaveChangesAsync();
+                    }
+                    if (r == "Cliente")
+                    {
+                        Cliente cliente = new Cliente();
+                        cliente.UtilizadorId = user.Id;
+                        _context.Add(cliente);
+                        await _context.SaveChangesAsync();
+                    }
 
                     _logger.LogInformation("User created a new account with password.");
 

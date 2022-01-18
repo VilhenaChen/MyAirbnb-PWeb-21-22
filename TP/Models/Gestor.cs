@@ -16,5 +16,6 @@ namespace TP.Models
         public virtual ICollection<Imovel> Imoveis { get; set; }
 
         public virtual ICollection<Avaliacao_Cliente> Avaliacoes_Clientes { get; set; }
+
     }
 }
