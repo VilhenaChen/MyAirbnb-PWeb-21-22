@@ -10,6 +10,8 @@ namespace TP.Areas.Identity.Pages.Account.Manage
     {
         public static string Index => "Index";
 
+        public static string Portfolio => "Portfolio";
+
         public static string Email => "Email";
 
         public static string ChangePassword => "ChangePassword";
@@ -25,6 +27,8 @@ namespace TP.Areas.Identity.Pages.Account.Manage
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
+
+        public static string PortfolioNavClass(ViewContext viewContext) => PageNavClass(viewContext, Portfolio);
 
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);
 

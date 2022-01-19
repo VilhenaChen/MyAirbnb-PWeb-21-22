@@ -19,9 +19,12 @@ namespace TP.Models
         [Display(Name = "País")]
         public string Pais { get; set; }
 
-        public string Cidade { get; set; }
+        public string Distrito { get; set; }
+
+        public string Localidade { get; set; }
 
         [Display(Name = "Código Postal")]
+        [DataType(DataType.PostalCode)]
         public string Codigo_Postal { get; set; }
 
         public string Morada { get; set; }

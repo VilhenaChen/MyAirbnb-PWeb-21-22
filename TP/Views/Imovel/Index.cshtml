@@ -1,22 +1,22 @@
 ﻿@model IEnumerable<TP.Models.Imovel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Imoveis Disponíveis";
 }
 
-<h1>Index</h1>
+<h1>Imoveis Disponíveis</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.IsInRole("Gestor"))
+    {
+        <a asp-action="Create">Criar Novo Imovel</a>
+    }
 </p>
-<table class="table">
+<!-- <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipologia)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
@@ -25,19 +25,10 @@
                 @Html.DisplayNameFor(model => model.Pais)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cidade)
+                @Html.DisplayNameFor(model => model.Distrito)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Codigo_Postal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Morada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Extras)
+                @Html.DisplayNameFor(model => model.Localidade)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Preco)
@@ -45,45 +36,47 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
+<tbody>
+    @for (int i = 0, j = 0; i < 3; i++, j = j + 3)
+    {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipologia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pais)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Codigo_Postal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Morada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Extras)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Preco)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+            @foreach (var item in Model.Skip(j))
+            {
+                <td>
+                    <div class="row-md-3">
+                        INSERIR IMAGEM
+                    </div>
+                    <div class="row-md-3">
+                        <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Localidade) , @Html.DisplayFor(modelItem => item.Distrito) , @Html.DisplayFor(modelItem => item.Pais)</a>
+                    </div>
+                    <div class="row-md-3">
+                        @Html.DisplayFor(modelItem => item.Nome) , @Html.DisplayFor(modelItem => item.Preco)
+                    </div>
+                </td>
+            }
         </tr>
-}
-    </tbody>
-</table>
+    }
+</tbody>
+</table> -->
+
+<div>
+    @for(int i = 0, j = 0; i < 3; i++, j = j + 3)
+    {
+        <div class="row">
+        @foreach (var item in Model.Skip(j).Take(3))
+        {
+            <div class="col-md-3">
+                <div class="row-md-3">
+                    <!--INSERIR IMAGEM-->
+                </div>
+                <div class="row-md-3">
+                    <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Localidade) , @Html.DisplayFor(modelItem => item.Distrito) , @Html.DisplayFor(modelItem => item.Pais)</a>
+                </div>
+                <div class="row-md-3">
+                    @Html.DisplayFor(modelItem => item.Nome) , @Html.DisplayFor(modelItem => item.Preco)
+                </div>
+            </div>
+        }
+        </div>
+    }
+</div>
