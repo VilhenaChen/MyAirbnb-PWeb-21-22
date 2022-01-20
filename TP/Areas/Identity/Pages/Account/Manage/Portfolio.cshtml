@@ -1,12 +1,64 @@
 ﻿@page
-@model IndexModel
+@model PortfolioModel
 @{
     ViewData["Title"] = "Portfolio";
     ViewData["ActivePage"] = ManageNavPages.Portfolio;
 }
 
-<h4>@ViewData["Title"]</h4>
+<h1>Os seus Imóveis</h1>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+<p>
+    <a asp-controller="Imovel" asp-action="Create">Criar Novo Imovel</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tipo
+            </th>
+            <th>
+                Nome
+            </th>
+            <th>
+                Pais
+            </th>
+            <th>
+                Distrito
+            </th>
+            <th>
+                Localidade
+            </th>
+            <th>
+                Preco
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Imoveis)
+        {
+            <tr>
+                <td>
+                    @item.Tipo
+                </td>
+                <td>
+                    @item.Nome
+                </td>
+                <td>
+                    @item.Pais
+                </td>
+                <td>
+                    @item.Distrito
+                </td>
+                <td>
+                    @item.Localidade
+                </td>
+                <td>
+                    @item.Preco
+                </td>
+                <td></td>
+            </tr>
+        }
+        </tbody>
+</table>

@@ -10,30 +10,40 @@ namespace TP.Models
     {
         public int Id { get; set; }
 
+        [Required]
         public string Tipo { get; set; }
 
+        [Required]
         public string Tipologia { get; set; }
 
+        [Required]
         public string Nome { get; set; }
 
+        [Required]
         [Display(Name = "País")]
         public string Pais { get; set; }
 
+        [Required]
         public string Distrito { get; set; }
 
+        [Required]
         public string Localidade { get; set; }
 
+        [Required]
         [Display(Name = "Código Postal")]
-        [DataType(DataType.PostalCode)]
         public string Codigo_Postal { get; set; }
 
+        [Required]
         public string Morada { get; set; }
 
+        [Required]
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
 
+        [Required]
         public string Extras { get; set; }
 
+        [Required]
         [Display(Name = "Preço")]
         public double Preco { get; set; }
 
