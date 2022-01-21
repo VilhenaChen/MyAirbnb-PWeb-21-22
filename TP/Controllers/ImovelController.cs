@@ -15,6 +15,7 @@ namespace TP.Controllers
     {
         private readonly UserManager<Utilizador> _userManager;
         private readonly ApplicationDbContext _context;
+        public SelectList opcoes { get;   set; }
 
         public ImovelController(ApplicationDbContext context, UserManager<Utilizador> userManager)
         {
@@ -25,7 +26,7 @@ namespace TP.Controllers
         // GET: Imovel
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Imovel;
+            var applicationDbContext = _context.Imovel.Include(p => p.Tipo_Imovel);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -50,6 +51,7 @@ namespace TP.Controllers
         // GET: Imovel/Create
         public IActionResult Create()
         {
+            ViewData["Tipo_ImovelId"] = new SelectList(_context.Tipo_Imovel, "Id", "Tipo");
             return View();
         }
 
@@ -58,7 +60,7 @@ namespace TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Tipo,Tipologia,Nome,Pais,Distrito,Localidade,Codigo_Postal,Morada,Descricao,Extras,Preco")] Imovel imovel)
+        public async Task<IActionResult> Create([Bind("Id,Tipo_ImovelId,Tipologia,Nome,Pais,Distrito,Localidade,Codigo_Postal,Morada,Descricao,Extras,Preco")] Imovel imovel)
         {
             if (ModelState.IsValid)
             {
@@ -73,6 +75,7 @@ namespace TP.Controllers
                 await _context.SaveChangesAsync();
                 return Redirect("~/Identity/Account/Manage/Portfolio");
             }
+            ViewData["Tipo_ImovelId"] = new SelectList(_context.Tipo_Imovel, "Id", "Tipo");
             return View(imovel);
         }
 

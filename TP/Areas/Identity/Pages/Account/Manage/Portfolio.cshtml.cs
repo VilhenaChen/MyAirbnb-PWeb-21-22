@@ -90,7 +90,7 @@ namespace TP.Areas.Identity.Pages.Account.Manage
                     break;
                 }
             }
-            Imoveis = _context.Imovel.Where(e => e.GestorId == idGestor);
+            Imoveis = _context.Imovel.Include(g=> g.Tipo_Imovel).Where(e => e.GestorId == idGestor);
         }
     }
 }

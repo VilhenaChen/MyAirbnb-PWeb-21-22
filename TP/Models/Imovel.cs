@@ -11,7 +11,8 @@ namespace TP.Models
         public int Id { get; set; }
 
         [Required]
-        public string Tipo { get; set; }
+        public int Tipo_ImovelId { get; set; }
+        public Tipo_Imovel Tipo_Imovel { get; set; }
 
         [Required]
         public string Tipologia { get; set; }

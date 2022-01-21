@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TP.Data;
 
 namespace TP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220121014452_AddTipoImovel2")]
+    partial class AddTipoImovel2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -342,8 +344,9 @@ namespace TP.Data.Migrations
                     b.Property<double>("Preco")
                         .HasColumnType("float");
 
-                    b.Property<int>("Tipo_ImovelId")
-                        .HasColumnType("int");
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tipologia")
                         .IsRequired()
@@ -352,8 +355,6 @@ namespace TP.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GestorId");
-
-                    b.HasIndex("Tipo_ImovelId");
 
                     b.ToTable("Imovel");
                 });
@@ -430,7 +431,7 @@ namespace TP.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Tipo")
+                    b.Property<string>("tipo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -654,15 +655,7 @@ namespace TP.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TP.Models.Tipo_Imovel", "Tipo_Imovel")
-                        .WithMany("Imovel")
-                        .HasForeignKey("Tipo_ImovelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Gestor");
-
-                    b.Navigation("Tipo_Imovel");
                 });
 
             modelBuilder.Entity("TP.Models.Item_Checklist", b =>
@@ -743,11 +736,6 @@ namespace TP.Data.Migrations
                     b.Navigation("Avaliacao_Imovel");
 
                     b.Navigation("Verificacoes");
-                });
-
-            modelBuilder.Entity("TP.Models.Tipo_Imovel", b =>
-                {
-                    b.Navigation("Imovel");
                 });
 
             modelBuilder.Entity("TP.Models.Utilizador", b =>
