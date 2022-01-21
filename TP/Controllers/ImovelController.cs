@@ -71,7 +71,7 @@ namespace TP.Controllers
                 }
                 _context.Add(imovel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Redirect("~/Identity/Account/Manage/Portfolio");
             }
             return View(imovel);
         }
@@ -129,7 +129,7 @@ namespace TP.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Redirect("~/Identity/Account/Manage/Portfolio");
             }
             return View(imovel);
         }
@@ -160,7 +160,7 @@ namespace TP.Controllers
             var imovel = await _context.Imovel.FindAsync(id);
             _context.Imovel.Remove(imovel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Redirect("~/Identity/Account/Manage/Portfolio");
         }
 
         private bool ImovelExists(int id)

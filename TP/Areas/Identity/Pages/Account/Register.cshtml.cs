@@ -106,10 +106,10 @@ namespace TP.Areas.Identity.Pages.Account
                 {
                     //Dar role ao user
                     var r = Request.Form["Role"];
-                    await _userManager.AddToRoleAsync(user, r);
 
                     //Criar um elemento de gestor ou cliente na tabela de base de dados respetiva
                     if (r == "Gestor") {
+                        await _userManager.AddToRoleAsync(user, r);
                         Gestor gestor = new Gestor();
                         gestor.UtilizadorId = user.Id;
                         _context.Add(gestor);
@@ -117,10 +117,16 @@ namespace TP.Areas.Identity.Pages.Account
                     }
                     if (r == "Cliente")
                     {
+                        await _userManager.AddToRoleAsync(user, r);
                         Cliente cliente = new Cliente();
                         cliente.UtilizadorId = user.Id;
                         _context.Add(cliente);
                         await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Erro", "Role Inexistente");
+                        return Page();
                     }
 
                     _logger.LogInformation("User created a new account with password.");

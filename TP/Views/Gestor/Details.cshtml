@@ -1,0 +1,48 @@
+﻿@model TP.Models.Gestor
+
+@{
+    ViewData["Title"] = "Detailhes de Gestor";
+}
+
+<h1>Detalhes do Gestor:</h1>
+
+<div>
+    <h4>@Model.Utilizador.UserName</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Utilizador.UserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Utilizador.UserName)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Utilizador.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Utilizador.Nome)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Utilizador.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Utilizador.Email)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Telemóvel
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Utilizador.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Voltar Atrás</a>
+</div>

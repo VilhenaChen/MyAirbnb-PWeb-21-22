@@ -15,13 +15,13 @@
     <thead>
         <tr>
             <th>
-                Tipo
-            </th>
-            <th>
                 Nome
             </th>
             <th>
-                Pais
+                Tipo
+            </th>
+            <th>
+                País
             </th>
             <th>
                 Distrito
@@ -30,7 +30,7 @@
                 Localidade
             </th>
             <th>
-                Preco
+                Preço
             </th>
             <th></th>
         </tr>
@@ -40,10 +40,10 @@
         {
             <tr>
                 <td>
-                    @item.Tipo
+                    <a asp-controller="Imovel" asp-action="Details" asp-route-id="@item.Id">@item.Nome</a>
                 </td>
                 <td>
-                    @item.Nome
+                    @item.Tipo
                 </td>
                 <td>
                     @item.Pais
@@ -57,7 +57,10 @@
                 <td>
                     @item.Preco
                 </td>
-                <td></td>
+                <td>
+                    <a asp-controller="Imovel" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    <a asp-controller="Imovel" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                </td>
             </tr>
         }
         </tbody>
