@@ -1,0 +1,85 @@
+﻿@model IEnumerable<TP.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Reser";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Check_In)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Check_Out)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Confirmacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imovel.Nome)
+            </th>
+            @if (!User.IsInRole("Funcionario"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Funcionario)
+                </th>
+            }
+            
+            @if (!User.IsInRole("Cliente"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Cliente)
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Check_In)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Check_Out)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Confirmacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imovel.Nome)
+            </td>
+            @if (!User.IsInRole("Funcionario"))
+            {
+                <th>
+                    @Html.DisplayFor(modelItem => item.Funcionario.Utilizador.Nome)
+                </th>
+            }
+
+            @if (!User.IsInRole("Cliente"))
+            {
+                <th>
+                    @Html.DisplayFor(modelItem => item.Cliente.Utilizador.Nome)
+                </th>
+            }
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

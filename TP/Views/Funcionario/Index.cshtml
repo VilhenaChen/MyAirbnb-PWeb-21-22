@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TP.Models.Funcionario>
+
+@{
+    ViewData["Title"] = "Lista de Funcionários";
+}
+
+<h1>Lista de Funcionários</h1>
+
+<p>
+    <a asp-action="Create">Criar um novo Funcionário</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Nome
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Utilizador.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Utilizador.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

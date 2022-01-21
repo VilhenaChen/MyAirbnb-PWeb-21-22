@@ -1,0 +1,24 @@
+﻿@model TP.Models.Tipo_Imovel
+
+@{
+    ViewData["Title"] = "Detalhes do Tipo de Imóvel";
+}
+
+<h1>Detalhes do tipo de imóvel:</h1>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Tipo)</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Voltar Atrás</a>
+</div>

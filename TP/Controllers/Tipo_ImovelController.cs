@@ -11,24 +11,23 @@ using TP.Models;
 
 namespace TP.Controllers
 {
-    [Authorize(Roles="Admin")]
-    public class ClienteController : Controller
+    [Authorize(Roles = "Admin")]
+    public class Tipo_ImovelController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ClienteController(ApplicationDbContext context)
+        public Tipo_ImovelController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Cliente
+        // GET: Tipo_Imovel
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Cliente.Include(c => c.Utilizador);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Tipo_Imovel.ToListAsync());
         }
 
-        // GET: Cliente/Details/5
+        // GET: Tipo_Imovel/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,18 +35,39 @@ namespace TP.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente
-                .Include(c => c.Utilizador)
+            var tipo_Imovel = await _context.Tipo_Imovel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (cliente == null)
+            if (tipo_Imovel == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(tipo_Imovel);
         }
 
-        // GET: Cliente/Edit/5
+        // GET: Tipo_Imovel/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Tipo_Imovel/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Tipo")] Tipo_Imovel tipo_Imovel)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(tipo_Imovel);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(tipo_Imovel);
+        }
+
+        // GET: Tipo_Imovel/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -55,28 +75,22 @@ namespace TP.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente
-                .Include(c => c.Utilizador)
-                .FirstOrDefaultAsync(m => m.Id == id); ;
-            if (cliente == null)
+            var tipo_Imovel = await _context.Tipo_Imovel.FindAsync(id);
+            if (tipo_Imovel == null)
             {
                 return NotFound();
             }
-            ViewData["Username"] = new SelectList(_context.Users, "Id", "Id", cliente.Utilizador.UserName);
-            ViewData["Nome"] = new SelectList(_context.Users, "Id", "Id", cliente.Utilizador.Nome);
-            ViewData["Email"] = new SelectList(_context.Users, "Id", "Id", cliente.Utilizador.Email);
-            ViewData["PhoneNumber"] = new SelectList(_context.Users, "Id", "Id", cliente.Utilizador.PhoneNumber);
-            return View(cliente);
+            return View(tipo_Imovel);
         }
 
-        // POST: Cliente/Edit/5
+        // POST: Tipo_Imovel/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UtilizadorId")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo")] Tipo_Imovel tipo_Imovel)
         {
-            if (id != cliente.Id)
+            if (id != tipo_Imovel.Id)
             {
                 return NotFound();
             }
@@ -85,12 +99,12 @@ namespace TP.Controllers
             {
                 try
                 {
-                    _context.Update(cliente);
+                    _context.Update(tipo_Imovel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteExists(cliente.Id))
+                    if (!Tipo_ImovelExists(tipo_Imovel.Id))
                     {
                         return NotFound();
                     }
@@ -101,13 +115,12 @@ namespace TP.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UtilizadorId"] = new SelectList(_context.Users, "Id", "Id", cliente.UtilizadorId);
-            return View(cliente);
+            return View(tipo_Imovel);
         }
 
-        private bool ClienteExists(int id)
+        private bool Tipo_ImovelExists(int id)
         {
-            return _context.Cliente.Any(e => e.Id == id);
+            return _context.Tipo_Imovel.Any(e => e.Id == id);
         }
     }
 }

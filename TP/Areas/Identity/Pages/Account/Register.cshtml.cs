@@ -105,28 +105,43 @@ namespace TP.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     //Dar role ao user
-                    var r = Request.Form["Role"];
-
-                    //Criar um elemento de gestor ou cliente na tabela de base de dados respetiva
-                    if (r == "Gestor") {
-                        await _userManager.AddToRoleAsync(user, r);
-                        Gestor gestor = new Gestor();
-                        gestor.UtilizadorId = user.Id;
-                        _context.Add(gestor);
-                        await _context.SaveChangesAsync();
-                    }
-                    if (r == "Cliente")
+                    if (User.IsInRole("Gestor"))
                     {
-                        await _userManager.AddToRoleAsync(user, r);
-                        Cliente cliente = new Cliente();
-                        cliente.UtilizadorId = user.Id;
-                        _context.Add(cliente);
+                        await _userManager.AddToRoleAsync(user, "Funcionario");
+                        Funcionario funcionario = new Funcionario();
+                        funcionario.UtilizadorId = user.Id;
+                        var utilizador = await _userManager.GetUserAsync(User);
+                        var gestor = _context.Gestor.Where(g => g.UtilizadorId == utilizador.Id).FirstOrDefault();
+                        funcionario.GestorId = gestor.Id;
+                        _context.Add(funcionario);
                         await _context.SaveChangesAsync();
                     }
                     else
                     {
-                        ModelState.AddModelError("Erro", "Role Inexistente");
-                        return Page();
+                        var r = Request.Form["Role"];
+
+                        //Criar um elemento de gestor ou cliente na tabela de base de dados respetiva
+                        if (r == "Gestor")
+                        {
+                            await _userManager.AddToRoleAsync(user, r);
+                            Gestor gestor = new Gestor();
+                            gestor.UtilizadorId = user.Id;
+                            _context.Add(gestor);
+                            await _context.SaveChangesAsync();
+                        }
+                        if (r == "Cliente")
+                        {
+                            await _userManager.AddToRoleAsync(user, r);
+                            Cliente cliente = new Cliente();
+                            cliente.UtilizadorId = user.Id;
+                            _context.Add(cliente);
+                            await _context.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Erro", "Role Inexistente");
+                            return Page();
+                        }
                     }
 
                     _logger.LogInformation("User created a new account with password.");

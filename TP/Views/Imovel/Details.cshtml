@@ -80,6 +80,7 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Create" asp-controller="Reserva" asp-route-id="@Model.Id">Reservar</a> |
     @if (User.IsInRole("Gestor"))
     {
         <a asp-area="Identity" asp-page="/Account/Manage/Portfolio">Voltar atrás</a>

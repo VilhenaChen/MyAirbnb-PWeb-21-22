@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,6 +24,7 @@ namespace TP.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         // GET: Imovel
         public async Task<IActionResult> Index()
         {
@@ -30,6 +32,7 @@ namespace TP.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [AllowAnonymous]
         // GET: Imovel/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -48,6 +51,7 @@ namespace TP.Controllers
             return View(imovel);
         }
 
+        [Authorize(Roles = "Gestor")]
         // GET: Imovel/Create
         public IActionResult Create()
         {
@@ -55,6 +59,7 @@ namespace TP.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Gestor")]
         // POST: Imovel/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -79,6 +84,7 @@ namespace TP.Controllers
             return View(imovel);
         }
 
+        [Authorize(Roles = "Gestor")]
         // GET: Imovel/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -95,6 +101,7 @@ namespace TP.Controllers
             return View(imovel);
         }
 
+        [Authorize(Roles = "Gestor")]
         // POST: Imovel/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -137,6 +144,7 @@ namespace TP.Controllers
             return View(imovel);
         }
 
+        [Authorize(Roles = "Gestor")]
         // GET: Imovel/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -155,6 +163,7 @@ namespace TP.Controllers
             return View(imovel);
         }
 
+        [Authorize(Roles = "Gestor")]
         // POST: Imovel/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
