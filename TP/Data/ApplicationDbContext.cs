@@ -23,5 +23,6 @@ namespace TP.Data
         public DbSet<Checklist> Checklist { get; set; }
         public DbSet<Item_Checklist> Item_Checklist { get; set; }
         public DbSet<Reserva> Reserva { get; set; }
+        public DbSet<Imagem> Imagem { get; set; }
     }
 }

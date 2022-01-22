@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,19 +18,21 @@ namespace TP.Controllers
     {
         private readonly UserManager<Utilizador> _userManager;
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
         public SelectList opcoes { get;   set; }
 
-        public ImovelController(ApplicationDbContext context, UserManager<Utilizador> userManager)
+        public ImovelController(ApplicationDbContext context, UserManager<Utilizador> userManager, IWebHostEnvironment hostEnvironment)
         {
             _userManager = userManager;
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         [AllowAnonymous]
         // GET: Imovel
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Imovel.Include(p => p.Tipo_Imovel);
+            var applicationDbContext = _context.Imovel.Include(p => p.Tipo_Imovel).Include(p => p.Imagem);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -65,10 +69,28 @@ namespace TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Tipo_ImovelId,Tipologia,Nome,Pais,Distrito,Localidade,Codigo_Postal,Morada,Descricao,Extras,Preco")] Imovel imovel)
+        public async Task<IActionResult> Create([Bind("Id,Tipo_ImovelId,Tipologia,Nome,Pais,Distrito,Localidade,Codigo_Postal,Morada,Descricao,Extras,Preco,Img")] Imovel imovel)
         {
             if (ModelState.IsValid)
             {
+                //Guardar imagem
+                string rootPath = _hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(imovel.Img.FileName);
+                string extension = Path.GetExtension(imovel.Img.FileName);
+                fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                string path = Path.Combine(rootPath + "/imgImoveis/", fileName);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await imovel.Img.CopyToAsync(fileStream);
+                }
+
+                Imagem image = new Imagem();
+                image.nome = fileName;
+                _context.Add(image);
+                await _context.SaveChangesAsync();
+
+                imovel.ImagemId = image.Id;
+
                 Utilizador user = await _userManager.GetUserAsync(User);
                 DbSet<Gestor> gestores = _context.Set<Gestor>();
                 foreach (Gestor g in gestores)

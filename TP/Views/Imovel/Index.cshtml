@@ -67,7 +67,7 @@
         {
             <div class="col-md-3">
                 <div class="row-md-3">
-                    <!--INSERIR IMAGEM-->
+                    <img src="~/imgImoveis/@item.Imagem.nome" />
                 </div>
                 <div class="row-md-3">
                     <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Localidade) , @Html.DisplayFor(modelItem => item.Distrito) , @Html.DisplayFor(modelItem => item.Pais)</a>

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,8 +53,16 @@ namespace TP.Models
         public int GestorId { get; set; }
         public Gestor Gestor { get; set; }
 
+        [Display(Name = "Imagem do Imovel")]
+        [NotMapped]
+        public IFormFile Img { get; set; }
+
+        public int ImagemId { get; set; }
+        public Imagem Imagem { get; set; }
+
         public virtual ICollection<Checklist> Verificacoes { get; set; }
 
         public virtual ICollection<Reserva> Reservas { get; set; }
+
     }
 }

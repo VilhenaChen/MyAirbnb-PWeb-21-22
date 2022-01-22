@@ -129,7 +129,7 @@ namespace TP.Areas.Identity.Pages.Account
                             _context.Add(gestor);
                             await _context.SaveChangesAsync();
                         }
-                        if (r == "Cliente")
+                        else if (r == "Cliente")
                         {
                             await _userManager.AddToRoleAsync(user, r);
                             Cliente cliente = new Cliente();

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TP.Data;
 
 namespace TP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220122024429_addImg")]
+    partial class addImg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,10 +306,15 @@ namespace TP.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ImovelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("nome")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImovelId");
 
                     b.ToTable("Imagem");
                 });
@@ -336,9 +343,6 @@ namespace TP.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("GestorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ImagemId")
                         .HasColumnType("int");
 
                     b.Property<string>("Localidade")
@@ -370,8 +374,6 @@ namespace TP.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GestorId");
-
-                    b.HasIndex("ImagemId");
 
                     b.HasIndex("Tipo_ImovelId");
 
@@ -666,17 +668,22 @@ namespace TP.Data.Migrations
                     b.Navigation("Utilizador");
                 });
 
+            modelBuilder.Entity("TP.Models.Imagem", b =>
+                {
+                    b.HasOne("TP.Models.Imovel", "Imovel")
+                        .WithMany("Imagens")
+                        .HasForeignKey("ImovelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Imovel");
+                });
+
             modelBuilder.Entity("TP.Models.Imovel", b =>
                 {
                     b.HasOne("TP.Models.Gestor", "Gestor")
                         .WithMany("Imoveis")
                         .HasForeignKey("GestorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TP.Models.Imagem", "Imagem")
-                        .WithMany("Imoveis")
-                        .HasForeignKey("ImagemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -687,8 +694,6 @@ namespace TP.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Gestor");
-
-                    b.Navigation("Imagem");
 
                     b.Navigation("Tipo_Imovel");
                 });
@@ -759,13 +764,10 @@ namespace TP.Data.Migrations
                     b.Navigation("Imoveis");
                 });
 
-            modelBuilder.Entity("TP.Models.Imagem", b =>
-                {
-                    b.Navigation("Imoveis");
-                });
-
             modelBuilder.Entity("TP.Models.Imovel", b =>
                 {
+                    b.Navigation("Imagens");
+
                     b.Navigation("Reservas");
 
                     b.Navigation("Verificacoes");

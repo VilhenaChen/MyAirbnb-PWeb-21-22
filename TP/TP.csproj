@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\imgImoveis\" />
     <Folder Include="wwwroot\tema\" />
   </ItemGroup>
 
