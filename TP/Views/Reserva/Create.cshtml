@@ -1,7 +1,7 @@
 ﻿@model TP.Models.Reserva
 
 @{
-    ViewData["Title"] = "Reservar";
+    ViewData["Title"] = "Criar Reservar";
 }
 
 <h1>Reservar Imóvel</h1>
@@ -11,52 +11,52 @@
         <h4>@ViewBag.Imovel.Nome</h4>
         <hr />
         <dl class="row">
-            <dt class="col-sm-2">
+            <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.Imovel.Tipo_Imovel.Tipo)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-5">
                 @ViewBag.Imovel.Tipo_Imovel.Tipo
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.Imovel.Tipologia)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-5">
                 @ViewBag.Imovel.Tipologia
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.Imovel.Pais)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-5">
                 @ViewBag.Imovel.Pais
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.Imovel.Distrito)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-5">
                 @ViewBag.Imovel.Distrito
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.Imovel.Localidade)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-5">
                 @ViewBag.Imovel.Localidade
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.Imovel.Codigo_Postal)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-5">
                 @ViewBag.Imovel.Codigo_Postal
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.Imovel.Morada)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-5">
                 @ViewBag.Imovel.Morada
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.Imovel.Preco)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-5">
                 @ViewBag.Imovel.Preco
             </dd>
         </dl>
@@ -64,6 +64,9 @@
     <div class="col-md-5">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="ImovelId" class="form-control" value=@ViewBag.Imovel.Id type ="hidden" />
+            </div>
             <div class="form-group">
                 <label asp-for="Check_In" class="control-label"></label>
                 <input asp-for="Check_In" class="form-control" />
@@ -75,7 +78,7 @@
                 <span asp-validation-for="Check_Out" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary"/>
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

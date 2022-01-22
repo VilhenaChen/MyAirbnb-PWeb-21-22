@@ -79,14 +79,18 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
-    <a asp-action="Create" asp-controller="Reserva" asp-route-id="@Model.Id">Reservar</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> 
+    @if (User.IsInRole("Cliente"))
+    {
+        <a asp-action="Create" asp-controller="Reserva" asp-route-id="@Model.Id">Reservar</a> 
+    }
     @if (User.IsInRole("Gestor"))
     {
+        <a asp-action="Index" asp-controller="Reserva" asp-route-id="@Model.Id">Ver lista de Reservas</a> 
         <a asp-area="Identity" asp-page="/Account/Manage/Portfolio">Voltar atrás</a>
     }
     else
     {
-        <a asp-action="Index">Voltar atrást</a>
+        <a asp-action="Index">Voltar atrás</a>
     }
 </div>

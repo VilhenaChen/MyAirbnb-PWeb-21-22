@@ -45,7 +45,7 @@ namespace TP.Models
         public string Extras { get; set; }
 
         [Required]
-        [Display(Name = "Preço")]
+        [Display(Name = "Preço por Noite")]
         public double Preco { get; set; }
 
         public int GestorId { get; set; }

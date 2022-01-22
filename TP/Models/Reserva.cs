@@ -10,7 +10,7 @@ namespace TP.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        
         public string Estado { get; set; }
 
         [Required]
@@ -27,15 +27,12 @@ namespace TP.Models
         [Display(Name = "Comentários após o Check-out")]
         public string Comentarios_Check_Out { get; set; }
 
-        [Required]
         public int ImovelId { get; set; }
         public Imovel Imovel { get; set; }
 
-        [Required]
         public int FuncionarioId { get; set; }
         public Funcionario Funcionario { get; set; }
 
-        [Required]
         public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
 
