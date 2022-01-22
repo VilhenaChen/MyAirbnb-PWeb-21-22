@@ -75,7 +75,8 @@ namespace TP.Controllers
         // GET: Reserva/Create
         public IActionResult Create(int id)
         {
-            ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Where(i => i.Id == id).FirstOrDefault();
+            ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Include(t => t.Imagem).Where(i => i.Id == id).FirstOrDefault();
+
             return View();
         }
 
@@ -92,18 +93,18 @@ namespace TP.Controllers
                 if (DateTime.Compare(reserva.Check_In, hoje) < 0 )
                 {
                     ModelState.AddModelError("Erro", "A data de Check-In é anterior à data atual");
-                    ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
+                    ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Include(t => t.Imagem).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
                     return View(reserva);
                 }
                 if ( DateTime.Compare(reserva.Check_Out, hoje) < 0)
                 {
                     ModelState.AddModelError("Erro", "A data de Check-Out é anterior à data atual");
-                    ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
+                    ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Include(t => t.Imagem).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
                     return View(reserva);
                 }
                 if (DateTime.Compare(reserva.Check_In, reserva.Check_Out) > 0) {
                     ModelState.AddModelError("Erro", "A data de Check-Out é anterior à data de Check-In");
-                    ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
+                    ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Include(t => t.Imagem).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
                     return View(reserva);
                 }
 
@@ -113,7 +114,7 @@ namespace TP.Controllers
                     if  ((DateTime.Compare(reserva.Check_In, r.Check_In) > 0 && DateTime.Compare(reserva.Check_In, r.Check_Out) < 0) || (DateTime.Compare(reserva.Check_Out, r.Check_In) > 0 && DateTime.Compare(reserva.Check_Out, r.Check_Out) < 0))
                     {
                         ModelState.AddModelError("Erro", "As datas inseridas já não se encontram disponíveis");
-                        ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
+                        ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Include(t => t.Imagem).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
                         return View(reserva);
                     }
                 }
@@ -151,7 +152,7 @@ namespace TP.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
+            ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Include(t => t.Imagem).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
             return View(reserva);
         }
 

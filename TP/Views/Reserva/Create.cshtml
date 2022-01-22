@@ -10,6 +10,7 @@
     <div class="col-md-5">
         <h4>@ViewBag.Imovel.Nome</h4>
         <hr />
+        <img src="~/imgImoveis/@ViewBag.Imovel.Imagem.nome" style="width: 100%; height: auto; display: block;   />
         <dl class="row">
             <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.Imovel.Tipo_Imovel.Tipo)
@@ -22,6 +23,12 @@
             </dt>
             <dd class="col-sm-5">
                 @ViewBag.Imovel.Tipologia
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Imovel.Wc)
+            </dt>
+            <dd class="col-sm-5">
+                @ViewBag.Imovel.Wc
             </dd>
             <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.Imovel.Pais)
