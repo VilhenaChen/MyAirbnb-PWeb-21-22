@@ -4,93 +4,59 @@
     ViewData["Title"] = "Detalhes de Imovel";
 }
 
-<h1>Detalhes do Imóvel:</h1>
-
+<h1>@Model.Nome</h1>
 <div>
-    <h4>@Model.Nome</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tipo_Imovel.Tipo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tipo_Imovel.Tipo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tipologia)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tipologia)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Pais)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Pais)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Distrito)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Distrito)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Localidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Localidade)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Codigo_Postal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Codigo_Postal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Morada)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Morada)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Extras)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Extras)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Preco)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Preco)
-        </dd>
-    </dl>
+    <span>Avaliacao</span>
+    <span>Nr Comentarios</span>
+    <span>@Model.Localidade , @Model.Distrito , @Model.Pais</span>
+</div>
+<div sstyle="margin-bottom: 50px;">
+    <img class="imgDetails" src="~/imgImoveis/@Model.Imagem.nome" style=" width: 100%; height: auto; display: block;" />
+</div>
+<div class="row" style="box-sizing: border-box;">
+    <div class="col-md-9">
+        <div>
+            <h2>@Model.Nome</h2>
+        </div>
+        <div>
+            <ol style="margin: 0px !important; padding: 0px !important;">
+                <li style="display: inline-block !important;"><span>@Model.Tipologia Quarto(s)</span></li>
+                <li style="display: inline-block !important;"><span>@Model.Wc Casa(s) de banho</span></li>
+            </ol>
+        </div>
+        <hr />
+        <div>
+            <h6>Descrição</h6>
+            <span>
+                @Model.Descricao
+            </span>
+        </div>
+        <hr />
+    </div>
+    <div class="col-md-2" style="border: 1px solid rgb(221, 221, 221); border-radius: 12px; padding: 24px; box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px; margin-top=10;">
+        <div>
+            €@Model.Preco / noite
+        </div>
+        <div>
+            @if (!User.IsInRole("Gestor") && !User.IsInRole("Funcionario"))
+            {
+                <a asp-action="Create" asp-controller="Reserva" asp-route-id="@Model.Id">Reservar</a>
+            }
+            else if (User.IsInRole("Gestor"))
+            {
+                <div>
+                    <a asp-action="Index" asp-controller="Reserva" asp-route-id="@Model.Id">Ver lista de Reservas</a>
+                </div>
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+                </div>
+                
+            }
+        </div>
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> 
-    @if (User.IsInRole("Cliente"))
-    {
-        <a asp-action="Create" asp-controller="Reserva" asp-route-id="@Model.Id">Reservar</a> 
-    }
-    @if (User.IsInRole("Gestor"))
-    {
-        <a asp-action="Index" asp-controller="Reserva" asp-route-id="@Model.Id">Ver lista de Reservas</a> 
-        <a asp-area="Identity" asp-page="/Account/Manage/Portfolio">Voltar atrás</a>
-    }
-    else
-    {
-        <a asp-action="Index">Voltar atrás</a>
-    }
+    <h6>Avaliacaoes</h6>
+</div>
+<div>
 </div>

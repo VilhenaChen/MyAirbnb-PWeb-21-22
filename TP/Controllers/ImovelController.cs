@@ -45,7 +45,7 @@ namespace TP.Controllers
                 return NotFound();
             }
 
-            var imovel = await _context.Imovel
+            var imovel = await _context.Imovel.Include(p => p.Tipo_Imovel).Include(p => p.Imagem)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (imovel == null)
             {
@@ -69,7 +69,7 @@ namespace TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Tipo_ImovelId,Tipologia,Nome,Pais,Distrito,Localidade,Codigo_Postal,Morada,Descricao,Extras,Preco,Img")] Imovel imovel)
+        public async Task<IActionResult> Create([Bind("Id,Tipo_ImovelId,Tipologia,Nome,Pais,Distrito,Localidade,Codigo_Postal,Morada,Descricao,Wc,Extras,Preco,Img")] Imovel imovel)
         {
             if (ModelState.IsValid)
             {
@@ -100,6 +100,7 @@ namespace TP.Controllers
                 }
                 _context.Add(imovel);
                 await _context.SaveChangesAsync();
+                ViewData["Tipo_ImovelId"] = new SelectList(_context.Tipo_Imovel, "Id", "Tipo");
                 return Redirect("~/Identity/Account/Manage/Portfolio");
             }
             ViewData["Tipo_ImovelId"] = new SelectList(_context.Tipo_Imovel, "Id", "Tipo");
@@ -115,11 +116,13 @@ namespace TP.Controllers
                 return NotFound();
             }
 
-            var imovel = await _context.Imovel.FindAsync(id);
+            var imovel = _context.Imovel.Include(r => r.Imagem).Where(r => r.Id == id).FirstOrDefault();
             if (imovel == null)
             {
                 return NotFound();
             }
+            ViewData["Imagem"] = _context.Imagem.Where(i => i.Id == imovel.ImagemId).FirstOrDefault();
+            ViewData["Tipo_ImovelId"] = new SelectList(_context.Tipo_Imovel, "Id", "Tipo");
             return View(imovel);
         }
 
@@ -129,7 +132,7 @@ namespace TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo,Tipologia,Nome,Pais,Distrito,Localidade,Codigo_Postal,Morada,Descricao,Extras,Preco")] Imovel imovel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo_ImovelId,Tipologia,Nome,Pais,Distrito,Localidade,Codigo_Postal,Morada,Descricao,Wc,Extras,Preco,ImagemId")] Imovel imovel)
         {
             if (id != imovel.Id)
             {
@@ -161,8 +164,12 @@ namespace TP.Controllers
                         throw;
                     }
                 }
+                ViewData["Imagem"] = _context.Imagem.Where(i => i.Id == imovel.ImagemId).FirstOrDefault();
+                ViewData["Tipo_ImovelId"] = new SelectList(_context.Tipo_Imovel, "Id", "Tipo");
                 return Redirect("~/Identity/Account/Manage/Portfolio");
             }
+            ViewData["Imagem"] = _context.Imagem.Where(i => i.Id == imovel.ImagemId).FirstOrDefault();
+            ViewData["Tipo_ImovelId"] = new SelectList(_context.Tipo_Imovel, "Id", "Tipo");
             return View(imovel);
         }
 

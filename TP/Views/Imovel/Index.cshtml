@@ -65,12 +65,14 @@
         <div class="row">
         @foreach (var item in Model.Skip(j).Take(3))
         {
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <div class="row-md-3">
-                    <img src="~/imgImoveis/@item.Imagem.nome" />
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        <img class="listImg" src="~/imgImoveis/@item.Imagem.nome" />
+                    </a>
                 </div>
                 <div class="row-md-3">
-                    <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Localidade) , @Html.DisplayFor(modelItem => item.Distrito) , @Html.DisplayFor(modelItem => item.Pais)</a>
+                    @Html.DisplayFor(modelItem => item.Localidade) , @Html.DisplayFor(modelItem => item.Distrito) , @Html.DisplayFor(modelItem => item.Pais)
                 </div>
                 <div class="row-md-3">
                     @Html.DisplayFor(modelItem => item.Nome) , @Html.DisplayFor(modelItem => item.Preco)

@@ -13,11 +13,13 @@ namespace TP.Models
         public int Id { get; set; }
 
         [Required]
+        [Display(Name="Tipo de Imóvel")]
         public int Tipo_ImovelId { get; set; }
         public Tipo_Imovel Tipo_Imovel { get; set; }
 
         [Required]
-        public string Tipologia { get; set; }
+        [Display(Name = "Quarto(s)")]
+        public int Tipologia { get; set; }
 
         [Required]
         public string Nome { get; set; }
@@ -33,6 +35,7 @@ namespace TP.Models
         public string Localidade { get; set; }
 
         [Required]
+        [DataType(DataType.PostalCode)]
         [Display(Name = "Código Postal")]
         public string Codigo_Postal { get; set; }
 
@@ -41,9 +44,13 @@ namespace TP.Models
 
         [Required]
         [Display(Name = "Descrição")]
+        [MinLength(25)]
         public string Descricao { get; set; }
 
         [Required]
+        [Display(Name = "Casa(s) de Banho")]
+        public int Wc { get; set; }
+
         public string Extras { get; set; }
 
         [Required]
