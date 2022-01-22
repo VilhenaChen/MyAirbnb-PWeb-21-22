@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TP.Data;
@@ -30,9 +31,10 @@ namespace TP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var dbpath = Path.Combine(Directory.GetCurrentDirectory(), "AppData");
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection").Replace("[DataDirectory]", dbpath)));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<Utilizador>(options => options.SignIn.RequireConfirmedAccount = true)
