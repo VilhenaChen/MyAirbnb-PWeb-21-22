@@ -89,13 +89,36 @@ namespace TP.Controllers
             if (ModelState.IsValid)
             {
                 DateTime hoje = DateTime.Now;
-                if (DateTime.Compare(reserva.Check_In,hoje) < 0 || DateTime.Compare(reserva.Check_Out, hoje) < 0 || DateTime.Compare(reserva.Check_In, reserva.Check_Out) > 0) {
+                if (DateTime.Compare(reserva.Check_In, hoje) < 0 )
+                {
+                    ModelState.AddModelError("Erro", "A data de Check-In é anterior à data atual");
+                    ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
+                    return View(reserva);
+                }
+                if ( DateTime.Compare(reserva.Check_Out, hoje) < 0)
+                {
+                    ModelState.AddModelError("Erro", "A data de Check-Out é anterior à data atual");
+                    ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
+                    return View(reserva);
+                }
+                if (DateTime.Compare(reserva.Check_In, reserva.Check_Out) > 0) {
+                    ModelState.AddModelError("Erro", "A data de Check-Out é anterior à data de Check-In");
                     ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
                     return View(reserva);
                 }
 
+                var reservas = _context.Reserva.Where(r => r.ImovelId == reserva.ImovelId);
+                foreach (Reserva r in reservas)
+                {
+                    if  ((DateTime.Compare(reserva.Check_In, r.Check_In) > 0 && DateTime.Compare(reserva.Check_In, r.Check_Out) < 0) || (DateTime.Compare(reserva.Check_Out, r.Check_In) > 0 && DateTime.Compare(reserva.Check_Out, r.Check_Out) < 0))
+                    {
+                        ModelState.AddModelError("Erro", "As datas inseridas já não se encontram disponíveis");
+                        ViewData["Imovel"] = _context.Imovel.Include(t => t.Tipo_Imovel).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
+                        return View(reserva);
+                    }
+                }
+
                 Imovel imov = _context.Imovel.Include(t => t.Gestor).Where(i => i.Id == reserva.ImovelId).FirstOrDefault();
-                Console.WriteLine(imov.Nome);
                 var funcs = _context.Funcionario.Include(t => t.Gestor);
                 int count = 0;
                 foreach (Funcionario f in funcs)
