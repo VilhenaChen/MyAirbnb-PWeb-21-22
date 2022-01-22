@@ -4155,19 +4155,20 @@ input[type="button"].btn-block {
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  background-color:aqua !important;
 }
 
-.navbar > .container,
-.navbar > .container-fluid {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
+    .navbar > .container,
+    .navbar > .container-fluid {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
 
 .navbar-brand {
   display: inline-block;
@@ -4240,6 +4241,14 @@ input[type="button"].btn-block {
   background: no-repeat center center;
   background-size: 100% 100%;
 }
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.custom-toggler.navbar-toggler {
+    border-color: #fff;
+} 
 
 @media (max-width: 575.98px) {
   .navbar-expand-sm > .container,
@@ -4454,7 +4463,7 @@ input[type="button"].btn-block {
 }
 
 .navbar-light .navbar-brand {
-  color: rgba(0, 0, 0, 0.9);
+    color: rgba(0, 0, 0, 0.9);
 }
 
 .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
@@ -6589,6 +6598,10 @@ button.bg-dark:focus {
 
 .bg-white {
   background-color: #fff !important;
+}
+
+.bg-our {
+    background-color: #131a2f !important;
 }
 
 .bg-transparent {

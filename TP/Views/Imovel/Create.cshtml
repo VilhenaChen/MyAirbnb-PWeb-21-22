@@ -90,11 +90,11 @@
 <div>
     @if (User.IsInRole("Gestor"))
     {
-        <a asp-area="Identity" asp-page="/Account/Manage/Portfolio">Voltar atrás</a>
+        <a class="btn btn-info" asp-area="Identity" asp-page="/Account/Manage/Portfolio">Voltar atrás</a>
     }
     else
     {
-        <a asp-action="Index">Voltar atrást</a>
+        <a class="btn btn-info" asp-action="Index">Voltar atrást</a>
     }
 </div>
 

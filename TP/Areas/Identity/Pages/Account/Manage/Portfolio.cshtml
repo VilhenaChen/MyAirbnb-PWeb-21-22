@@ -58,8 +58,8 @@
                     @item.Preco
                 </td>
                 <td>
-                    <a asp-controller="Imovel" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                    <a asp-controller="Imovel" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                    <a class="btn btn-info" asp-controller="Imovel" asp-action="Edit" asp-route-id="@item.Id" style="margin-bottom:10px">Editar</a>
+                    <a class="btn btn-danger" asp-controller="Imovel" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
                 </td>
             </tr>
         }

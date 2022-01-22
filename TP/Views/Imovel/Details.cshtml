@@ -40,23 +40,20 @@
         <div>
             @if (!User.IsInRole("Gestor") && !User.IsInRole("Funcionario"))
             {
-                <a asp-action="Create" asp-controller="Reserva" asp-route-id="@Model.Id">Reservar</a>
+                <a class="btn btn-danger" asp-action="Create" asp-controller="Reserva" asp-route-id="@Model.Id">Reservar</a>
             }
             else if (User.IsInRole("Gestor"))
             {
                 <div>
-                    <a asp-action="Index" asp-controller="Reserva" asp-route-id="@Model.Id">Ver lista de Reservas</a>
+                    <a class="btn btn-info" asp-action="Index" asp-controller="Reserva" asp-route-id="@Model.Id">Ver lista de Reservas</a>
                 </div>
                 <div>
-                    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
                 </div>
                 
             }
         </div>
     </div>
-</div>
-<div>
-    <h6>Avaliacaoes</h6>
 </div>
 <div>
 </div>

@@ -7,7 +7,7 @@
 <h1>Lista de Tipos de Imóvel</h1>
 
 <p>
-    <a asp-action="Create">Criar um novo Tipo</a>
+    <a class="btn btn-info" asp-action="Create">Criar um novo Tipo</a>
 </p>
 <table class="table">
     <thead>
@@ -25,8 +25,8 @@
                 @Html.DisplayFor(modelItem => item.Tipo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
             </td>
         </tr>
 }

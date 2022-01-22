@@ -12,10 +12,13 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-custom border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyAirBnb</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/tema/d.png" class="imgNav"/>
+                    MyAirBnb
+                </a>
+                <button class="navbar-toggler ml-auto custom-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -24,7 +27,7 @@
                         @if (!SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Imovel" asp-action="Index">Imoveis</a>
+                                <a class="nav-link text-custom" asp-area="" asp-controller="Imovel" asp-action="Index">Imoveis</a>
                             </li>
                         }
                         else
@@ -32,43 +35,43 @@
                             @if (User.IsInRole("Cliente"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Imovel" asp-action="Index">Imóveis</a>
+                                    <a class="nav-link text-custom" asp-area="" asp-controller="Imovel" asp-action="Index">Imóveis</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Reserva" asp-action="Index">As Minhas Reservas</a>
+                                    <a class="nav-link text-custom" asp-area="" asp-controller="Reserva" asp-action="Index">As Minhas Reservas</a>
                                 </li>
                             }
                             @if (User.IsInRole("Funcionario"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Imovel" asp-action="Index">Imoveis</a>
+                                    <a class="nav-link text-custom" asp-area="" asp-controller="Imovel" asp-action="Index">Imoveis</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Reserva" asp-action="Index">Reservas</a>
+                                    <a class="nav-link text-custom" asp-area="" asp-controller="Reserva" asp-action="Index">Reservas</a>
                                 </li>
                             }
                             @if (User.IsInRole("Gestor"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Portfolio">Portfolio</a>
+                                    <a class="nav-link text-custom" asp-area="Identity" asp-page="/Account/Manage/Portfolio">Portfolio</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Funcionario" asp-action="Index">Funcionários</a>
+                                    <a class="nav-link text-custom" asp-area="" asp-controller="Funcionario" asp-action="Index">Funcionários</a>
                                 </li>
                             }
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Imovel" asp-action="Index">Imoveis</a>
+                                    <a class="nav-link text-custom" asp-area="" asp-controller="Imovel" asp-action="Index">Imoveis</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Clientes</a>
+                                    <a class="nav-link text-custom" asp-area="" asp-controller="Cliente" asp-action="Index">Clientes</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Gestor" asp-action="Index">Gestores</a>
+                                    <a class="nav-link text-custom" asp-area="" asp-controller="Gestor" asp-action="Index">Gestores</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Tipo_Imovel" asp-action="Index">Categorias de Imóveis</a>
+                                    <a class="nav-link text-custom" asp-area="" asp-controller="Tipo_Imovel" asp-action="Index">Categorias de Imóveis</a>
                                 </li>
                             }
 

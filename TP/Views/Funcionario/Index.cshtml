@@ -7,7 +7,7 @@
 <h1>Lista de Funcionários</h1>
 
 <p>
-    <a asp-action="Create">Criar um novo Funcionário</a>
+    <a class="btn btn-info" asp-action="Create">Criar um novo Funcionário</a>
 </p>
 <table class="table">
     <thead>
@@ -32,8 +32,8 @@
                     @Html.DisplayFor(modelItem => item.Utilizador.Nome)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a class="btn btn-danger" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
                 </td>
             </tr>
         }

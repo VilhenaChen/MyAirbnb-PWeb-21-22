@@ -62,7 +62,7 @@ namespace TP.Controllers
                 return NotFound();
             }
 
-            var funcionario = await _context.Funcionario.FindAsync(id);
+            var funcionario = _context.Funcionario.Include(f => f.Utilizador).Where(f => f.Id == id).FirstOrDefault();
             if (funcionario == null)
             {
                 return NotFound();
