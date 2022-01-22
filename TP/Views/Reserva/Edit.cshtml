@@ -21,6 +21,18 @@
             <dd class="col-sm-5">
                 @ViewBag.Cliente.Utilizador.Nome
             </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Check_In)
+            </dt>
+            <dd class="col-sm-5">
+                @Model.Check_In
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Check_Out)
+            </dt>
+            <dd class="col-sm-5">
+                @Model.Check_Out
+            </dd>
         </dl>
     </div>
 </div>
@@ -35,13 +47,20 @@
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Check_In" class="control-label"></label>
-                <input asp-for="Check_In" class="form-control" disabled />
+                <input asp-for="Check_In" class="form-control" value="@Model.Check_In" type="hidden" />
             </div>
             <div class="form-group">
-                <label asp-for="Check_Out" class="control-label"></label>
-                <input asp-for="Check_Out" class="form-control" disabled />
+                <input asp-for="Check_Out" class="form-control" value="@Model.Check_Out" type="hidden" />
             </div>
+            <!--<div class="form-group">
+            <label asp-for="Check_In" class="control-label"></label>
+            <input asp-for="Check_In" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+            <label asp-for="Check_Out" class="control-label"></label>
+            <input asp-for="Check_Out" class="form-control" disabled />
+            </div>-->
+
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Confirmacao" /> @Html.DisplayNameFor(model => model.Confirmacao)
